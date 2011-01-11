@@ -3,7 +3,7 @@
 Author: Craig Russell
 Date:   11 Jan 2011
 
-Plugin for Raporative http://rapportive.com/
+Plugin for Raportive http://rapportive.com/
 API development docs and discussion at http://groups.google.com/group/raplet-dev
 
 Searches for user in LDAP Directory based upon email address.
