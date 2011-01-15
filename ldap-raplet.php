@@ -24,6 +24,7 @@ $get_data['name']               = (isset($_GET['name']))                ? $_GET[
 $get_data['twitter_username']   = (isset($_GET['twitter_username']))    ? $_GET['twitter_username'] : "";
 $get_data['callback']           = (isset($_GET['callback']))            ? $_GET['callback'] : "";
 $get_data['show']               = (isset($_GET['show']))                ? $_GET['show'] : "";
+$get_data['oauth_token']        = (isset($_GET['oauth_token']))         ? $_GET['oauth_token'] : "";
 
 if ($get_data['show'] == "metadata"){
 
@@ -48,7 +49,8 @@ if ($get_data['show'] == "metadata"){
 
     $conn = my_ldap_connect();
     
-    if (is_resource($conn)) {
+    // If connected to server and provided valid token
+    if (is_resource($conn) && my_ldap_verify_token($conn, $get_data['oauth_token'])) {
         // Search for users with matching email address    
         $search_result = my_ldap_search($conn, "mail=".$get_data['email']);
         
