@@ -3,8 +3,8 @@
 
 /*
     Attempt to connect to LDAP server
-    If successful   return connection string
-    Otherwise       return false
+    If successful       return connection string
+    Otherwise           return false
 */
 function my_ldap_connect(){
     global $ldap_server;
@@ -31,8 +31,8 @@ function my_ldap_connect(){
     @param  resource    LDAP connection resource
     @param  string      LDAP search filter
     
-    If successful   return array of data for first matching object
-    Otherwise       return false
+    If successful       return array of data for first matching object
+    Otherwise           return false
 */
 function my_ldap_search($conn, $search_filter){
     global $ldap_server, $ldap_attributes;
@@ -48,6 +48,41 @@ function my_ldap_search($conn, $search_filter){
     }
             
     return $user_info;
+}
+
+/*
+    Authenticate user against LDAP directory
+    
+    @param  resource    LDAP connection resource
+    @param  string      username
+    @param  string      password
+    
+    If successful       return array with dn and OAuth token
+    Otherwise           return false
+*/
+function my_ldap_authenticate($conn, $username, $password){
+    global $ldap_server;
+    
+    $search_result = ldap_get_entries($conn, ldap_search($conn, $ldap_server['base_dn'], $ldap_server['username_attribute']."=".$username, array('dn', $ldap_server['token_attribute'])));    
+    
+    if($search_result['count']>0){
+        $return['dn']       = $search_result[0]['dn'];    
+        $return['tokens']   = array();
+        for($i=0; $i<$search_result[0][$ldap_server['token_attribute']]['count']; $i++){
+            $return['tokens'][] = $search_result[0][$ldap_server['token_attribute']][$i];
+        }
+        if(ldap_bind($conn, $return['dn'], $password))  return $return;
+    }    
+    return false;
+}
+
+/*
+    Set toekn value in LDAP directory
+*/
+function my_ldap_add_token($conn, $dn, $token){
+    global $ldap_server;    
+    
+    ldap_mod_add($conn, $dn, array($ldap_server['token_attribute'] => $token));
 }
 
 ?>
