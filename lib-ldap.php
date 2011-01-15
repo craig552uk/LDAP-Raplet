@@ -25,4 +25,29 @@ function my_ldap_connect(){
     return false;
 }
 
+/*
+    Search LDAP directory
+    
+    @param  resource    LDAP connection resource
+    @param  string      LDAP search filter
+    
+    If successful   return array of data for first matching object
+    Otherwise       return false
+*/
+function my_ldap_search($conn, $search_filter){
+    global $ldap_server, $ldap_attributes;
+
+    $search_result = ldap_get_entries($conn, ldap_search($conn, $ldap_server['base_dn'], $search_filter, array_keys($ldap_attributes)));    
+    $user_info = array();
+    
+    if ($search_result['count'] > 0){
+        // Put info for first matching user in to array
+        foreach ($ldap_attributes as $k => $v){                
+            if (isset($search_result[0][strtolower($k)])) { $user_info[$v] = $search_result[0][$k][0]; }
+        }    
+    }
+            
+    return $user_info;
+}
+
 ?>

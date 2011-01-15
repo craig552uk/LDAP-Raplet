@@ -49,37 +49,22 @@ if ($get_data['show'] == "metadata"){
     $conn = my_ldap_connect();
     
     if (is_resource($conn)) {
-        // Bind to LDAP server successful
+        // Search for users with matching email address    
+        $search_result = my_ldap_search($conn, "mail=".$get_data['email']);
         
-        // Search for users with matching email address
-        $search_filter = "mail=".$get_data['email'];        
-        $search_result = ldap_get_entries($conn, ldap_search($conn, $ldap_server['base_dn'], $search_filter, array_keys($ldap_attributes)));
-        
-        if ($search_result['count'] > 0){
-            // Found results
-            
-            // Put info for first matching user in to array
-            $user_info = array();
-            foreach ($ldap_attributes as $k => $v){                
-                if (isset($search_result[0][strtolower($k)])) { $user_info[$v] = $search_result[0][$k][0]; }
-            }
-        
-        }else{
-            // No matching users found
-            $found_info = false;
-        }        
+        // No matching users found
+        if (count($search_result) == 0) { $found_info = false; }        
     }else{
         // Bind to LDAP server failed
         $found_info = false;
     }
-
 
     // If user information has been found...
     if ($found_info){
 
         // Build HTML list of user information
         $html = "<ul>";
-        foreach ($user_info as $k => $v){
+        foreach ($search_result as $k => $v){
             $html = $html."<li><span>".htmlspecialchars($k)."</span>".htmlspecialchars($v)."</li>";
         }
         $html = $html."</ul>";
