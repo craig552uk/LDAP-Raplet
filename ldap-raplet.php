@@ -31,15 +31,16 @@ $rapplet_meta['data_provider_url'] = "";
 $rapplet_meta['configuration'] = "";
 
 // LDAP Server Details
-$ldap_server['hostname']    = "localhost";
-$ldap_server['port']        = "389";
-$ldap_server['bind_rdn']    = "cn=admin,dc=example,dc=com";
-$ldap_server['bind_pass']   = "passw0rd";
-$ldap_server['base_dn']     = "ou=People,dc=example,dc=com";
+$ldap_server['hostname']            = "localhost";
+$ldap_server['port']                = "389";
+$ldap_server['bind_rdn']            = "cn=admin,dc=example,dc=com";
+$ldap_server['bind_pass']           = "passw0rd";
+$ldap_server['base_dn']             = "ou=People,dc=example,dc=com";
+$ldap_server['protocol_version']    = 3;
 
 // Required attributes (lower case) and label strings in display order
 $ldap_attributes = array (
-        'displayName'       => 'Name',
+        'displayname'       => 'Name',
         'o'                 => 'Organisation',
         'title'             => 'Job Title',
         'ou'                => 'Department',
@@ -93,6 +94,9 @@ if ($get_data['show'] == "metadata"){
     $conn = ldap_connect($ldap_server['hostname'], $ldap_server['port']);
     if ($conn) {
         // Connection to LDAP server successful
+        
+        // Set Protocl Version
+        ldap_set_option($conn, LDAP_OPT_PROTOCOL_VERSION, $ldap_server['protocol_version']);
         
         // Bind to LDAP server
         $bind = ldap_bind($conn, $ldap_server['bind_rdn'], $ldap_server['bind_pass']);
