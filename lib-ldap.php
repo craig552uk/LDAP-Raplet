@@ -65,7 +65,7 @@ function my_ldap_authenticate($conn, $username, $password){
     
     $search_result = ldap_get_entries($conn, ldap_search($conn, $ldap_server['base_dn'], $ldap_server['username_attribute']."=".$username, array('dn', $ldap_server['token_attribute'])));    
     
-    if($search_result['count']>0){
+    if($search_result['count'] > 0){
         $return['dn']       = $search_result[0]['dn'];    
         $return['tokens']   = array();
         for($i=0; $i<$search_result[0][$ldap_server['token_attribute']]['count']; $i++){
@@ -77,12 +77,31 @@ function my_ldap_authenticate($conn, $username, $password){
 }
 
 /*
-    Set toekn value in LDAP directory
+    Set token value in LDAP directory
+    
+    @param  resource    LDAP connection resource
+    @param  string      DN of user object
+    @param  string      Token value to set
+
 */
 function my_ldap_add_token($conn, $dn, $token){
     global $ldap_server;    
     
     ldap_mod_add($conn, $dn, array($ldap_server['token_attribute'] => $token));
+}
+
+/*
+    Verify token
+    
+    @param  resource    LDAP connection resource
+    @param  string      Token string
+*/
+function my_ldap_verify_token($conn, $token){
+    global $ldap_server; 
+    
+    $search_result = ldap_get_entries($conn, ldap_search($conn, $ldap_server['base_dn'], $ldap_server['token_attribute']."=".$token, array('dn')));    
+    if($search_result['count'] > 0)     return true;
+    else                                return false;
 }
 
 ?>
