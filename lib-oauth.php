@@ -18,14 +18,14 @@ function gen_token($string){
     
     @param  array   Array of data
     
-    Returns     true if array contains matching identifier
+    Returns     token string if array contains matching identifier
     Otherwise   false
 */
-function contains_token($data){
+function contains_token($data=array()){
     global $oauth_params;
     $head_len = strlen($oauth_params['head_string']);
     foreach($data as $value){
-        if($oauth_params['head_string'] == substr($value,0,$head_len)) return true;
+        if($oauth_params['head_string'] == substr($value,0,$head_len)) return $value;
     }
     return false;
 }
