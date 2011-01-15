@@ -15,52 +15,7 @@ http://php.net/manual/en/book.json.php
 
 ****************************************/
 
-/********************************
-           SETTINGS
-********************************/
-
-$rapplet_meta['name'] = "LDAP Raplet";
-$rapplet_meta['description'] = "Searches for user in LDAP Directory based upon email address.";
-$rapplet_meta['welcome_text'] = "Thanks for using LDAP Raplet";
-$rapplet_meta['icon_url'] = "http://localhost/LDAP-Raplet/icon.png";
-$rapplet_meta['preview_url'] = "http://localhost/LDAP-Raplet/preview.png";
-$rapplet_meta['provider_name'] = "Craig Russell";
-$rapplet_meta['provider_url'] = "http://www.craig-russell.co.uk";
-$rapplet_meta['data_provider_name'] = "";
-$rapplet_meta['data_provider_url'] = "";
-$rapplet_meta['configuration'] = "";
-
-// LDAP Server Details
-$ldap_server['hostname']            = "localhost";
-$ldap_server['port']                = "389";
-$ldap_server['bind_rdn']            = "cn=admin,dc=example,dc=com";
-$ldap_server['bind_pass']           = "passw0rd";
-$ldap_server['base_dn']             = "ou=People,dc=example,dc=com";
-$ldap_server['protocol_version']    = 3;
-
-// Required attributes (lower case) and label strings in display order
-$ldap_attributes = array (
-        'displayname'       => 'Name',
-        'o'                 => 'Organisation',
-        'title'             => 'Job Title',
-        'ou'                => 'Department',
-        'mail'              => 'Email',
-        'telephonenumber'   => 'Tel',
-        'mobile'            => 'Mob'
-    );
-
-// JSON Response CSS and JavaScript
-$css = "
-        ul {list-style-type: none; margin: 0; padding: 0;}
-        li {font-size: 1.1em; margin: 0 0 0.5em 0; padding: 0;}
-        li span {font-weight: bold; margin-right: 0.5em;}
-    ";
-$js = "";
-
-
-/********************************
-           THE GUTS
-********************************/
+include_once('settings.php');
 
 // Get data from query String
 $get_data['email']              = (isset($_GET['email']))               ? $_GET['email'] : "";
