@@ -32,6 +32,7 @@ if ($get_data['show'] == "metadata"){
     $json_data['description']   = $rapplet_meta['description'];
     $json_data['welcome_text']  = $rapplet_meta['welcome_text'];
     $json_data['icon_url']      = $rapplet_meta['icon_url'];
+    $json_data['config_url']    = $rapplet_meta['config_url'];
     $json_data['preview_url']   = $rapplet_meta['preview_url'];
     $json_data['provider_name'] = $rapplet_meta['provider_name'];
     $json_data['provider_url']  = $rapplet_meta['provider_url'];
