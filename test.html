@@ -5,6 +5,7 @@
     <meta charset="utf-8">
     <style>
         body {font-family: ariel, helvetica, sans-serif;}
+        fieldset {margin-bottom: 10px;}
         legend {font-weight: bold;}
         input, label {float: left; padding: 3px; margin: 5px 0;}
         label {clear: left; width: 200px;}
@@ -24,5 +25,16 @@
             <label for="oauth_token">OAuth Token</label>        <input type="text" id="oauth_token" name="oauth_token" value="RAP-0bdb9071a9d07150d40dc7c72fc9494b92939ba3" />
                                                                 <input type="submit" id="submit" name="submit" value="Submit" />
         </form>
+    </fieldset>
+    
+    <fieldset>
+        <legend>Login Form Test Data</legend>
+        <form method="get" action="ldap-login.php">
+            <label for="redirect_uri">Redirect URI</label>      <input type="text" id="redirect_uri" name="redirect_uri" value="https://rapportive.com/raplets/" />
+            <label for="client_id">Client ID</label>            <input type="text" id="client_id" name="client_id" value="rapportive" />
+            <label for="response_type">Response Type</label>    <input type="text" id="response_type" name="response_type" value="token" />
+                                                                <input type="submit" id="submit" name="submit" value="Submit" />
+        </form>
+    </fieldset>
 </body>
 </html>
