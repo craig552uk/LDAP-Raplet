@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title></title>
+    <meta charset="utf-8">
+    <style>
+        body {font-family: ariel, helvetica, sans-serif;}
+        legend {font-weight: bold;}
+        input, label {float: left; padding: 3px; margin: 5px 0;}
+        label {clear: left; width: 200px;}
+        input[type=submit] {clear: left; margin-left: 205px;}
+    </style>
+<head>
+<body>
+
+    <fieldset>
+        <legend>Raplet Test Data</legend>
+        <form method="get" action="ldap-raplet.php">
+            <label for="email">Email</label>                    <input type="text" id="email" name="email" value="ijones01@example.com" />
+            <label for="name">Name</label>                      <input type="text" id="name" name="name" value="Indiana Jones" />
+            <label for="twitter_username">Twitter Name</label>  <input type="text" id="twitter_username" name="twitter_username" value="@ijones01" />
+            <label for="callback">Callback</label>              <input type="text" id="callback" name="callback" value="jsonp123456789" />
+            <label for="show">Show</label>                      <input type="text" id="show" name="show" value="" />
+                                                                <input type="submit" id="submit" name="submit" value="Submit" />
+        </form>
+</body>
+</html>
