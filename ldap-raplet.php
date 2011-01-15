@@ -33,19 +33,19 @@ $rapplet_meta['configuration'] = "";
 // LDAP Server Details
 $ldap_server['hostname']    = "localhost";
 $ldap_server['port']        = "389";
-$ldap_server['bind_rdn']    = "cn=binduser,o=org";
-$ldap_server['bind_pass']   = "b1ndpa55";
-$ldap_server['base_dn']     = "ou=people,o=org";
+$ldap_server['bind_rdn']    = "cn=admin,dc=example,dc=com";
+$ldap_server['bind_pass']   = "passw0rd";
+$ldap_server['base_dn']     = "ou=People,dc=example,dc=com";
 
 // Required attributes (lower case) and label strings in display order
 $ldap_attributes = array (
-        'uid'               => 'User Name',
-        'cn'                => 'Name',
+        'displayName'       => 'Name',
+        'o'                 => 'Organisation',
         'title'             => 'Job Title',
         'ou'                => 'Department',
         'mail'              => 'Email',
         'telephonenumber'   => 'Tel',
-        'l'                 => 'Office'
+        'mobile'            => 'Mob'
     );
 
 // JSON Response CSS and JavaScript
