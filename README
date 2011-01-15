@@ -7,6 +7,22 @@ API development docs and discussion at http://groups.google.com/group/raplet-dev
 Searches for user in LDAP Directory based upon email address.
 Returns various attributes for display alongside GMail thread.
 
+Settings to configure:
+
+$ldap_server['hostname']            LDAP Server Hostname or IP
+$ldap_server['port']                LDAP Server Port
+$ldap_server['bind_rdn']            Bind User Fully Qualified DN
+$ldap_server['bind_pass']           Bind User Password
+$ldap_server['base_dn']             Search Base
+$ldap_server['protocol_version']    LDAP Protocol Version
+
+$ldap_attributes                    Array of attributes to return
+                                    Key is attribute name (lowercase)
+                                    Value is label displayed to user
+                                    Elements in display order
+
+Use test.html to test JSON response to queries.
+
 Requires LDAP and JSON modules for PHP
 http://php.net/manual/en/book.ldap.php
 http://php.net/manual/en/book.json.php
