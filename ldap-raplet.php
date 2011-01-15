@@ -16,6 +16,7 @@ http://php.net/manual/en/book.json.php
 ****************************************/
 
 include_once('settings.php');
+include_once('lib-ldap.php');
 
 // Get data from query String
 $get_data['email']              = (isset($_GET['email']))               ? $_GET['email'] : "";
@@ -45,43 +46,30 @@ if ($get_data['show'] == "metadata"){
     // Found_info flag defaults to true
     $found_info = true;
 
-    // Connect to LDAP server
-    $conn = ldap_connect($ldap_server['hostname'], $ldap_server['port']);
-    if ($conn) {
-        // Connection to LDAP server successful
+    $conn = my_ldap_connect();
+    
+    if (is_resource($conn)) {
+        // Bind to LDAP server successful
         
-        // Set Protocl Version
-        ldap_set_option($conn, LDAP_OPT_PROTOCOL_VERSION, $ldap_server['protocol_version']);
+        // Search for users with matching email address
+        $search_filter = "mail=".$get_data['email'];        
+        $search_result = ldap_get_entries($conn, ldap_search($conn, $ldap_server['base_dn'], $search_filter, array_keys($ldap_attributes)));
         
-        // Bind to LDAP server
-        $bind = ldap_bind($conn, $ldap_server['bind_rdn'], $ldap_server['bind_pass']);
+        if ($search_result['count'] > 0){
+            // Found results
+            
+            // Put info for first matching user in to array
+            $user_info = array();
+            foreach ($ldap_attributes as $k => $v){                
+                if (isset($search_result[0][strtolower($k)])) { $user_info[$v] = $search_result[0][$k][0]; }
+            }
         
-        if ($bind) {
-            // Bind to LDAP server successful
-            
-            // Search for users with matching email address
-            $search_filter = "mail=".$get_data['email'];        
-            $search_result = ldap_get_entries($conn, ldap_search($conn, $ldap_server['base_dn'], $search_filter, array_keys($ldap_attributes)));
-            
-            if ($search_result['count'] > 0){
-                // Found results
-                
-                // Put info for first matching user in to array
-                $user_info = array();
-                foreach ($ldap_attributes as $k => $v){                
-                    if (isset($search_result[0][strtolower($k)])) { $user_info[$v] = $search_result[0][$k][0]; }
-                }
-            
-            }else{
-                // No matching users found
-                $found_info = false;
-            }        
         }else{
-            // Bind to LDAP server failed
+            // No matching users found
             $found_info = false;
-        }
+        }        
     }else{
-        // Connection to LDAP server failed
+        // Bind to LDAP server failed
         $found_info = false;
     }
 
