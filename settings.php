@@ -13,7 +13,6 @@ $rapplet_meta['provider_name']          Raplet provider organisation name
 $rapplet_meta['provider_url']           Raplet provider organisation URL
 $rapplet_meta['data_provider_name']     Raplet data provider name (Optional)
 $rapplet_meta['data_provider_url']      Raplet data provider URL (Optional)
-$rapplet_meta['configuration']          Unused
 
 ********************************/
 $rapplet_meta['name'] = "LDAP Raplet";
@@ -25,7 +24,6 @@ $rapplet_meta['provider_name'] = "Craig Russell";
 $rapplet_meta['provider_url'] = "http://www.craig-russell.co.uk";
 $rapplet_meta['data_provider_name'] = "";
 $rapplet_meta['data_provider_url'] = "";
-$rapplet_meta['configuration'] = "";
 
 
 /********************************

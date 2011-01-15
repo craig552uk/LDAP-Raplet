@@ -39,7 +39,6 @@ if ($get_data['show'] == "metadata"){
     // Set optional metadata values
     if ($rapplet_meta['data_provider_name'] != "")  $json_data['data_provider_name'] = $rapplet_meta['data_provider_name'];
     if ($rapplet_meta['data_provider_url'] != "")   $json_data['dat_provider_url']   = $rapplet_meta['data_provider_url'];
-    if ($rapplet_meta['configuration'] != "")       $json_data['configuration']      = $rapplet_meta['configuration'];
 
 }else{  // ($get_data['show'] != "metadata")
 
