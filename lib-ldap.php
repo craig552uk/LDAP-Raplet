@@ -63,7 +63,7 @@ function my_ldap_search($conn, $search_filter){
 function my_ldap_authenticate($conn, $username, $password){
     global $ldap_server;
     
-    $username str_replace('*', '', $username);
+    $username = str_replace('*', '', $username);
     
     $search_result = ldap_get_entries($conn, ldap_search($conn, $ldap_server['base_dn'], $ldap_server['username_attribute']."=".$username, array('dn', $ldap_server['token_attribute'])));    
     
