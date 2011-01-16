@@ -16,15 +16,18 @@ $param_ok['redirect_uri']   = ("https://rapportive.com/raplets" == substr($param
 $param_ok['client_id']      = ("rapportive" == $param['client_id']) ? true : false;
 $param_ok['response_type']  = ("token" == $param['response_type']) ? true : false;
 
-// Allow form if 
+// Allow form if parameters are ok
 $params_ok = ($param_ok['redirect_uri'] && $param_ok['client_id'] && $param_ok['response_type']) ? true : false;
 
-if (isset($_GET['submit'])){
-    // Attempt to authenticate
-    $conn = my_ldap_connect();
-    $data = my_ldap_authenticate($conn, $param['username'], $param['password']);
-    $authenticated = (isset($data['dn'])) ? true : false;
+// init error variable
+$error = "";
 
+// Attempt to authenticate
+$conn = my_ldap_connect();
+$data = my_ldap_authenticate($conn, $param['username'], $param['password']);
+$authenticated = (isset($data['dn'])) ? true : false;
+
+if (isset($_GET['login'])){
     if ($authenticated){
         // Re-bind as privileged user
         my_ldap_bind($conn);
@@ -38,7 +41,9 @@ if (isset($_GET['submit'])){
             // Save new token in LDAP directory
             my_ldap_add_token($conn, $data['dn'], $token);
         }
-    }    
+    }else{
+        $error = "Invalid user name and/or password";
+    }  
 }
 
 ?>
@@ -57,6 +62,7 @@ if (isset($_GET['submit'])){
                 input, label {float: left; padding: 3px; margin: 5px 0;}
                 label {clear: left; width: 200px;}
                 input[type=submit] {clear: left; margin-left: 205px; margin-right: 10px;}
+                .error {font-weight: bold; color: #F33;}
             </style>
         <head>
         <body>
@@ -64,14 +70,17 @@ if (isset($_GET['submit'])){
             <fieldset>
                 <legend>Authenticate</legend>
                 <form method="get" action="raplet-login.php">
+                    <?php if ($error != ""): ?>
+                        <p class="error"><?php echo $error; ?></p>
+                    <?php endif; ?>
                     <label for="username">User Name</label>    <input type="text" id="username" name="username" value="<?php echo $param['username'];?>" />
                     <label for="password">Password</label>     <input type="password" id="password" name="password" />
                     
-                    <input type="hidden" id="redirect_uri" name="redirect_uri" value="<?php echo $param['redirect_uri'];?>" />
-                    <input type="hidden" id="client_id" name="client_id" value="<?php echo $param['client_id'];?>" />
-                    <input type="hidden" id="response_type" name="response_type" value="<?php echo $param['response_type'];?>" />
+                    <input type="text" id="redirect_uri" name="redirect_uri" value="<?php echo $param['redirect_uri'];?>" />
+                    <input type="text" id="client_id" name="client_id" value="<?php echo $param['client_id'];?>" />
+                    <input type="text" id="response_type" name="response_type" value="<?php echo $param['response_type'];?>" />
                     
-                    <input type="submit" id="submit" name="submit" value="Login" />
+                    <input type="submit" id="login" name="login" value="Login" />
                     <input type="button" id="cancel" name="cancel" value="Cancel" onClick="window.close();"/>
                 </form>
             </fieldset>
@@ -83,10 +92,10 @@ if (isset($_GET['submit'])){
         <head>
             <title>Authenticate</title>
             <meta charset="utf-8">
-            <meta http-equiv="refresh" content="0; url=<?php echo urlencode($param['redirect_uri']) . '#' . urlencode($token);?>">
+            <!-- <meta http-equiv="refresh" content="0; url=<?php echo urlencode($param['redirect_uri']) . '#' . urlencode($token);?>"> -->
         <head>
         <body>
-            <p>If you are not redirected <a href="<?php echo urlencode($param['redirect_uri']) . '#' . urlencode($token);?>">click here</a>.<p>
+            <p>If you are not redirected <a href="<?php echo $param['redirect_uri'] . '#access_token=' . urlencode($token);?>">click here</a>.<p>
         </body>
         </html>    
     <?php endif; ?>
