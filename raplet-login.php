@@ -76,9 +76,9 @@ if (isset($_GET['login'])){
                     <label for="username">User Name</label>    <input type="text" id="username" name="username" value="<?php echo $param['username'];?>" />
                     <label for="password">Password</label>     <input type="password" id="password" name="password" />
                     
-                    <input type="text" id="redirect_uri" name="redirect_uri" value="<?php echo $param['redirect_uri'];?>" />
-                    <input type="text" id="client_id" name="client_id" value="<?php echo $param['client_id'];?>" />
-                    <input type="text" id="response_type" name="response_type" value="<?php echo $param['response_type'];?>" />
+                    <input type="hidden" id="redirect_uri" name="redirect_uri" value="<?php echo $param['redirect_uri'];?>" />
+                    <input type="hidden" id="client_id" name="client_id" value="<?php echo $param['client_id'];?>" />
+                    <input type="hidden" id="response_type" name="response_type" value="<?php echo $param['response_type'];?>" />
                     
                     <input type="submit" id="login" name="login" value="Login" />
                     <input type="button" id="cancel" name="cancel" value="Cancel" onClick="window.close();"/>
@@ -92,7 +92,7 @@ if (isset($_GET['login'])){
         <head>
             <title>Authenticate</title>
             <meta charset="utf-8">
-            <!-- <meta http-equiv="refresh" content="0; url=<?php echo urlencode($param['redirect_uri']) . '#' . urlencode($token);?>"> -->
+            <meta http-equiv="refresh" content="0; url=<?php echo $param['redirect_uri'] . '#access_token=' . urlencode($token);?>">
         <head>
         <body>
             <p>If you are not redirected <a href="<?php echo $param['redirect_uri'] . '#access_token=' . urlencode($token);?>">click here</a>.<p>
