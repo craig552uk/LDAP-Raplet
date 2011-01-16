@@ -16,13 +16,26 @@ function my_ldap_connect(){
         ldap_set_option($conn, LDAP_OPT_PROTOCOL_VERSION, $ldap_server['protocol_version']);
         
         // Bind to LDAP server
-        $bind = ldap_bind($conn, $ldap_server['bind_rdn'], $ldap_server['bind_pass']);
+        $bind = my_ldap_bind($conn);
         
         if ($bind) {
             return $conn;
         }     
     }
     return false;
+}
+
+/* 
+    Bind as user deifned in settings.php
+    
+    @param resource LDAP connection resource
+    
+    If successful   return true
+    Otherwise       return false
+*/
+function my_ldap_bind($conn){
+    global $ldap_server;
+    return ldap_bind($conn, $ldap_server['bind_rdn'], $ldap_server['bind_pass']);
 }
 
 /*
