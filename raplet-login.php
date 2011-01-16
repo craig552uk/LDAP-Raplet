@@ -26,11 +26,19 @@ if (isset($_GET['submit'])){
     $authenticated = (isset($data['dn'])) ? true : false;
 
     if ($authenticated){
-        // Get token
+        // Re-bind as privileged user
+        my_ldap_bind($conn);
+        
+        // Get token from user data
         $token = contains_token($data['tokens']);
-        // Set new token if needed
-        if (!is_string($token))     $token = gen_token($data['dn']);
-    }
+
+        if (!is_string($token)){
+            // Create new token if needed
+            $token = gen_token($data['dn']);
+            // Save new token in LDAP directory
+            my_ldap_add_token($conn, $data['dn'], $token);
+        }
+    }    
 }
 
 ?>
