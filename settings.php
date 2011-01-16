@@ -63,7 +63,7 @@ $oauth_params['head_string']        Identifier appended to head of hash token
 
 ********************************/
 $oauth_params['salt_string']        = "LDAP-Raplet 11235813";
-$oauth_params['head_string']        = "RAP-";
+$oauth_params['head_string']        = "RAP";
 
 /********************************
 
@@ -88,11 +88,7 @@ $ldap_attributes = array (
 Display CSS and JS
 
 ********************************/
-$css = "
-        ul {list-style-type: none; margin: 0; padding: 0;}
-        li {font-size: 1.1em; margin: 0 0 0.5em 0; padding: 0;}
-        li span {font-weight: bold; margin-right: 0.5em;}
-    ";
+$css = "ul {list-style-type: none; margin: 0; padding: 0;} li {font-size: 1.1em; margin: 0 0 0.5em 0; padding: 0;} li span {font-weight: bold; margin-right: 0.5em;}";
 $js = "";
 
 ?>
