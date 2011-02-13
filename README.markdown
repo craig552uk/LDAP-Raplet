@@ -1,12 +1,12 @@
 LDAP Raplet
 ================================================================================
 
-*Author*:  Craig Russell   
-*Email*:   <craig@craig-russell.co.uk>
-*Web*:     <http://www.craig-russell.co.uk> 
-*Version*: 0.2
+**Author**:  Craig Russell   
+**Email**:   <craig@craig-russell.co.uk>    
+**Web**:     <http://www.craig-russell.co.uk>    
+**Version**: 0.2    
 
-Plugin for Raportive <http://rapportive.com/>
+Plugin for Raportive <http://rapportive.com/>   
 API development docs at <http://code.rapportive.com/raplet-docs/>
 
 Searches for user in LDAP Directory based upon email address stored in mail attribute.    
